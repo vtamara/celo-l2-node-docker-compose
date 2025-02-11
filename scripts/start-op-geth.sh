@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-GETH=${GETH:-geth}
+BIN_GETH=${BIN_GETH:-geth}
 
 CELO_PATH=${CELO_PATH:-/}
 
@@ -24,7 +24,7 @@ fi
 # Init genesis if it's a custom chain and the datadir is empty
 if [ -n "${IS_CUSTOM_CHAIN}" ] && [ -z "$(ls -A "$BEDROCK_DATADIR")" ]; then
   echo "Initializing custom chain genesis..."
-  ${GETH} init --datadir="$BEDROCK_DATADIR" ${CELO_PATH}chainconfig/genesis.json
+  ${BIN_GETH} init --datadir="$BEDROCK_DATADIR" ${CELO_PATH}chainconfig/genesis.json
 fi
 
 # Determine syncmode based on NODE_TYPE
@@ -37,7 +37,7 @@ if [ -z "$OP_GETH__SYNCMODE" ]; then
 fi
 
 # Start op-geth.
-exec ${GETH} \
+exec ${BIN_GETH} \
   --datadir="$BEDROCK_DATADIR" \
   --http \
   --http.corsdomain="*" \
