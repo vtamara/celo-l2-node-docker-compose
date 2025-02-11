@@ -13,7 +13,7 @@ if (test ! -f ../op-geth/build/bin/geth) then {
 } fi;
 echo $PATH | grep op-node > /dev/null
 if (test "$?" != "0") then {
-  cd ../op-node
+  cd ../op-geth
   export PATH="$PATH:$(pwd)/build/bin"
   cd ../celo-l2-node-docker-compose
 } fi;
