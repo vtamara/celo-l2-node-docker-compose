@@ -1,5 +1,5 @@
 #/bin/sh
-# Without docker prepares binaries and directories and then runs op-geth 
+# Without docker prepares binaries and directories and then runs op-geth
 # Should match section op-geth: of docker-compose.yml
 
 CELO_PATH=${CELO_PATH:-./}
@@ -57,4 +57,5 @@ env `grep "^[^#]" ${CELO_PATH}.op-geth-exp.env | tr  "\n" " "` \
    BIN_GETH=$BIN_GETH \
    CELO_PATH=$CELO_PATH \
    MONITOR_ENABLED=false \
-   ${CELO_PATH}scripts/start-op-geth.sh 
+   ${CELO_PATH}scripts/start-op-geth.sh
+
