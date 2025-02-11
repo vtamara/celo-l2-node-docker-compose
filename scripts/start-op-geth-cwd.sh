@@ -7,7 +7,7 @@ GETH=./op-geth/build/bin/geth
 if [ ! -f "./shared/jwt.txt" ]; then
   echo "Creating JWT..."
   mkdir -p ./shared
-  head -c 32 /dev/urandom | xxd -p -c 32 > /shared/jwt.txt
+  head -c 32 /dev/urandom | xxd -p -c 32 > ./shared/jwt.txt
 fi
 
 # Check if either OP_GETH__HISTORICAL_RPC or HISTORICAL_RPC_DATADIR_PATH is set and if so set the historical rpc option.
