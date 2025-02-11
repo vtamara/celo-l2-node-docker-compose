@@ -3,13 +3,15 @@
 # section op-geth: of docker-composer.yml and variables of alfajores.env
 
 # image: us-west1-docker.pkg.dev/devopsre/celo-blockchain-public/op-geth:celo-v2.0.0-rc3
-cd ..
-git clone https://github.com/celo-org/op-geth.git
-cd  op-geth
-git checkout celo-v2.0.0-rc3
-make
-export PATH="$PATH:`pwd`/build/bin"
-cd ../celo-l2-node-docker-compose/
+if (test ! -f ../op-geth/build/bin/geth) then {
+  cd ..
+  git clone https://github.com/celo-org/op-geth.git
+  cd  op-geth
+  git checkout celo-v2.0.0-rc3
+  make
+  export PATH="$PATH:`pwd`/build/bin"
+  cd ../celo-l2-node-docker-compose/
+} fi;
 
 # env_file:
 # - ./envs/${NETWORK_NAME}/op-geth.env
