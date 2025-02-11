@@ -15,6 +15,7 @@ cd ../celo-l2-node-docker-compose/
 # - ./envs/${NETWORK_NAME}/op-geth.env
 cp envs/alfajores/op-geth.env .env
 # - .env
+source .env
 
 # volumes:
 # - ./envs/${NETWORK_NAME}/config:/chainconfig
