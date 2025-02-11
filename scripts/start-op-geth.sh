@@ -6,16 +6,16 @@ if [ "$GETH" = "" ]; then
   GETH=geth
 fi
 
-#CELOPATH=./
-if [ "$CELOPATH" = "" ]; then
-  CELOPATH=/
+#CELO_PATH=./
+if [ "$CELO_PATH" = "" ]; then
+  CELO_PATH=/
 fi
 
 # Create JWT if it doesn't exist
-if [ ! -f "${CELOPATH}shared/jwt.txt" ]; then
+if [ ! -f "${CELO_PATH}shared/jwt.txt" ]; then
   echo "Creating JWT..."
-  mkdir -p ${CELOPATH}shared
-  dd bs=1 count=32 if=/dev/urandom of=/dev/stdout | xxd -p -c 32 > ${CELOPATH}shared/jwt.txt
+  mkdir -p ${CELO_PATH}shared
+  dd bs=1 count=32 if=/dev/urandom of=/dev/stdout | xxd -p -c 32 > ${CELO_PATH}shared/jwt.txt
 fi
 
 # Check if either OP_GETH__HISTORICAL_RPC or HISTORICAL_RPC_DATADIR_PATH is set and if so set the historical rpc option.
@@ -30,7 +30,7 @@ fi
 # Init genesis if it's a custom chain and the datadir is empty
 if [ -n "${IS_CUSTOM_CHAIN}" ] && [ -z "$(ls -A "$BEDROCK_DATADIR")" ]; then
   echo "Initializing custom chain genesis..."
-  ${GETH} init --datadir="$BEDROCK_DATADIR" ${CELOPATH}chainconfig/genesis.json
+  ${GETH} init --datadir="$BEDROCK_DATADIR" ${CELO_PATH}chainconfig/genesis.json
 fi
 
 # Determine syncmode based on NODE_TYPE
@@ -65,7 +65,7 @@ exec ${GETH} \
   --authrpc.vhosts="*" \
   --authrpc.addr=0.0.0.0 \
   --authrpc.port=8551 \
-  --authrpc.jwtsecret=${CELOPATH}shared/jwt.txt \
+  --authrpc.jwtsecret=${CELO_PATH}shared/jwt.txt \
   --rollup.sequencerhttp="$BEDROCK_SEQUENCER_HTTP" \
   --rollup.disabletxpoolgossip=true \
   --port="${PORT__OP_GETH_P2P:-39393}" \
