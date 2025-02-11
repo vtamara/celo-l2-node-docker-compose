@@ -9,12 +9,13 @@ if (test ! -f ../op-geth/build/bin/geth) then {
   cd  op-geth
   git checkout celo-v2.0.0-rc3
   make
-  cd ../celo2-node-docker-compose
+  cd ../celo-l2-node-docker-compose
 } fi;
 echo $PATH | grep op-node > /dev/null
 if (test "$?" != "0") then {
   cd ../op-node
   export PATH="$PATH:$(pwd)/build/bin"
+  cd ../celo-l2-node-docker-compose
 } fi;
 
 # volumes:
