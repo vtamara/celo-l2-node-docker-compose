@@ -48,6 +48,6 @@ cat envs/alfajores/op-geth.env > .env
 # - .env
 cat alfajores.env >> .env
 
-(source .env ; /scripts/start-op-geth.sh)
+(source .env && /scripts/start-op-geth.sh)
 
 
