@@ -3,26 +3,49 @@
 # section op-geth: of docker-composer.yml and variables of alfajores.env
 
 # image: us-west1-docker.pkg.dev/devopsre/celo-blockchain-public/op-geth:celo-v2.0.0-rc3
-git clone https://github.com/celo-org/op-geth.git
-cd  op-geth
-make
+if (test ! -f ../op-geth/build/bin/geth) then {
+  cd ..
+  git clone https://github.com/celo-org/op-geth.git
+  cd  op-geth
+  git checkout celo-v2.0.0-rc3
+  make
+  cd ../celo2-node-docker-compose
+} fi;
+echo $PATH | grep op-node > /dev/null
+if (test "$?" != "0") then {
+  cd ../op-node
+  export PATH="$PATH:$(pwd)/build/bin"
+} fi;
 
 # volumes:
 # - ./envs/${NETWORK_NAME}/config:/chainconfig
-mkdir /chainconfig
-cp -rf envs/alfajores/config/* /chainconfing
+if (test ! -d /chainconfig) then {
+  sudo mkdir /chainconfig
+  sudo chown $(whoami):$(whoami) /chainconfig
+  cp -rf envs/alfajores/config/* /chainconfing
+} fi;
 # - ./scripts/:/scripts
-mkdir /scripts
-cp -rf scripts/* /scripts/
+if (test ! -d /scripts) then {
+  sudo mkdir /scripts
+  sudo chown $(whoami):$(whoami) /scripts
+  cp -rf scripts/* /scripts/
+} fi;
 # - shared:/shared
-mkdir /shared
+if (test ! -d /shared) then {
+  sudo mkdir /shared
+  sudo chown $(whoami):$(whoami) /shared
+} fi;
 # - ${DATADIR_PATH}:/geth alfajores.env includes DATADIR_PATH=./envs/${NETWORK_NAME}/datadir
-mkdir /geth
+if (test ! -d /geth) then {
+  sudo mkdir /geth
+  sudo chown $(whoami):$(whoami) /geth
+} fi;
 
 # env_file:
 # - ./envs/${NETWORK_NAME}/op-geth.env
 cp envs/alfajores/op-geth.env .env
 # - .env
 
+(source .env ; /scripts/start-op-geth.sh)
 
 
