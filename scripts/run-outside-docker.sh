@@ -44,8 +44,9 @@ if (test ! -d /geth) then {
 
 # env_file:
 # - ./envs/${NETWORK_NAME}/op-geth.env
-cp envs/alfajores/op-geth.env .env
+cat envs/alfajores/op-geth.env > .env
 # - .env
+cat alfajores.env >> .env
 
 (source .env ; /scripts/start-op-geth.sh)
 
