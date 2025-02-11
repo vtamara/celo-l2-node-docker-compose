@@ -2,23 +2,18 @@
 # Without docker prepares binaries and directories and then runs op-geth 
 # Based on docker-composer.yml
 
-if (test "$CELO_PATH" = "") then {
-  CELO_PATH="./"
-} fi;
+
+CELO_PATH=${CELO_PATH:-./}
 
 # image: us-west1-docker.pkg.dev/devopsre/celo-blockchain-public/op-geth:celo-v2.0.0-rc3
-if (test ! -f ${CELO_PATH}op-geth/build/bin/geth) then {
+if (test "$GETH" == "" && ! -f ${CELO_PATH}op-geth/build/bin/geth) then {
   git clone https://github.com/celo-org/op-geth.git
   cd  op-geth
   git checkout celo-v2.0.0-rc3
   make
   cd ..
 } fi;
-
-echo $PATH | grep op-geth > /dev/null
-if (test "$?" != "0") then {
-  export PATH="$PATH:$(pwd)/op-geth/build/bin"
-} fi;
+GETH=${GETH:-${CELO_PATH}op-geth/build/bin/geth}
 
 # volumes:
 # - ./envs/${NETWORK_NAME}/config:/chainconfig
@@ -46,6 +41,4 @@ sed -e "s/\/geth/${CELO_PATH}geth/g" envs/alfajores/op-geth.env > ${CELO_PATH}.e
 # - .env
 cat alfajores.env >> ${CELO_PATH}.env
 
-GETH=${CELO_PATH}op-geth/build/bin/geth
-
-env `grep "^[^#]" .env | tr  "\n" " "` GETH=$GET CELO_PATH=$CELO_PATH PATH=$PATH ${CELO_PATH}scripts/start-op-geth.sh 
+env `grep "^[^#]" .env | tr  "\n" " "` GETH=$GETH CELO_PATH=$CELO_PATH ${CELO_PATH}scripts/start-op-geth.sh 

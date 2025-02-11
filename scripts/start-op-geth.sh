@@ -1,15 +1,9 @@
 #!/bin/sh
 set -e
 
-#GETH=./op-geth/build/bin/geth
-if [ "$GETH" = "" ]; then
-  GETH=geth
-fi
+GETH=${GETH:-geth}
 
-#CELO_PATH=./
-if [ "$CELO_PATH" = "" ]; then
-  CELO_PATH=/
-fi
+CELO_PATH=${CELO_PATH:-/}
 
 # Create JWT if it doesn't exist
 if [ ! -f "${CELO_PATH}shared/jwt.txt" ]; then

@@ -1,8 +1,16 @@
 #!/bin/sh
 set -e
 
+if [ "$OPNODE" = "" ]; then
+  OPNODE=opnode
+fi
+
+if [ "$CELOPATH" = "" ]; then
+  CELO_PATH=/
+fi
+
 if [ -n "${IS_CUSTOM_CHAIN}" ]; then
-  export EXTENDED_ARG="${EXTENDED_ARG:-} --rollup.config=/chainconfig/rollup.json"
+  export EXTENDED_ARG="${EXTENDED_ARG:-} --rollup.config=${CELO_PATH}chainconfig/rollup.json"
 else
   export EXTENDED_ARG="${EXTENDED_ARG:-} --network=$NETWORK_NAME --rollup.load-protocol-versions=true --rollup.halt=major"
 fi
@@ -14,7 +22,7 @@ if [ -n $USE_LOCAL_EIGENDA_PROXY_IF_UNSET ]; then
 fi
 
 # Start op-node.
-exec op-node \
+exec ${OPNODE} \
   --l1=$OP_NODE__RPC_ENDPOINT \
   --l2=http://op-geth:8551 \
   --rpc.addr=0.0.0.0 \
