@@ -1,13 +1,9 @@
 #!/bin/sh
 set -e
 
-if [ "$OPNODE" = "" ]; then
-  OPNODE=opnode
-fi
+CELO_PATH=${CELO_PATH:-/}
 
-if [ "$CELOPATH" = "" ]; then
-  CELO_PATH=/
-fi
+OPNODE=${OPNODE:-opnode}
 
 if [ -n "${IS_CUSTOM_CHAIN}" ]; then
   export EXTENDED_ARG="${EXTENDED_ARG:-} --rollup.config=${CELO_PATH}chainconfig/rollup.json"
@@ -27,7 +23,7 @@ exec ${OPNODE} \
   --l2=http://op-geth:8551 \
   --rpc.addr=0.0.0.0 \
   --rpc.port=9545 \
-  --l2.jwt-secret=/shared/jwt.txt \
+  --l2.jwt-secret=${CELO_PATH}shared/jwt.txt \
   --l1.trustrpc \
   --l1.rpckind=$OP_NODE__RPC_TYPE \
   --l1.beacon=$OP_NODE__L1_BEACON \
@@ -35,5 +31,5 @@ exec ${OPNODE} \
   --metrics.addr=0.0.0.0 \
   --metrics.port=7300 \
   --syncmode=execution-layer \
-  --p2p.priv.path=/shared/op-node_p2p_priv.txt \
+  --p2p.priv.path=${CELO_PATH}shared/op-node_p2p_priv.txt \
   $EXTENDED_ARG $@

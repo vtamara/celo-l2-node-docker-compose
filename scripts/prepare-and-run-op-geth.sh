@@ -2,7 +2,6 @@
 # Without docker prepares binaries and directories and then runs op-geth 
 # Based on docker-composer.yml
 
-
 CELO_PATH=${CELO_PATH:-./}
 
 # image: us-west1-docker.pkg.dev/devopsre/celo-blockchain-public/op-geth:celo-v2.0.0-rc3
