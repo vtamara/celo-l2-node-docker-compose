@@ -3,7 +3,7 @@ set -e
 
 CELO_PATH=${CELO_PATH:-/}
 
-OPNODE=${OPNODE:-opnode}
+BIN_OPNODE=${BIN_OPNODE:-op-node}
 
 if [ -n "${IS_CUSTOM_CHAIN}" ]; then
   export EXTENDED_ARG="${EXTENDED_ARG:-} --rollup.config=${CELO_PATH}chainconfig/rollup.json"
@@ -18,7 +18,7 @@ if [ -n $USE_LOCAL_EIGENDA_PROXY_IF_UNSET ]; then
 fi
 
 # Start op-node.
-exec ${OPNODE} \
+exec ${BIN_OPNODE} \
   --l1=$OP_NODE__RPC_ENDPOINT \
   --l2=http://op-geth:8551 \
   --rpc.addr=0.0.0.0 \
