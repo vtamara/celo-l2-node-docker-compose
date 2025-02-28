@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+BIN_EIGENDA=${BIN_EIGENDA:-eigenda-proxy}
+
+CELO_PATH=${CELO_PATH:-/}
+
 # Archive blobs configuration
 if [ -n "$EIGENDA_LOCAL_ARCHIVE_BLOBS" ]; then
   export EXTENDED_EIGENDA_PARAMETERS="${EXTENDED_EIGENDA_PARAMETERS:-} --s3.credential-type=$EIGENDA_LOCAL_S3_CREDENTIAL_TYPE \
@@ -12,11 +16,11 @@ if [ -n "$EIGENDA_LOCAL_ARCHIVE_BLOBS" ]; then
   --storage.fallback-targets=s3"
 fi
 
-exec ./eigenda-proxy --addr=0.0.0.0 \
+exec ${BIN_EIGENDA} --addr=0.0.0.0 \
   --port=4242 \
   --eigenda.disperser-rpc="$EIGENDA_LOCAL_DISPERSER_RPC" \
   --eigenda.eth-rpc="$OP_NODE__RPC_ENDPOINT" \
-  --eigenda.signer-private-key-hex=$(head -c 32 /dev/urandom | xxd -p -c 32) \
+  --eigenda.signer-private-key-hex=$(dd bs=1 count=32 if=/dev/urandom of=/dev/stdout | xxd -p -c 32) \
   --eigenda.svc-manager-addr="$EIGENDA_LOCAL_SVC_MANAGER_ADDR" \
   --eigenda.status-query-timeout="45m" \
   --eigenda.disable-tls=false \
