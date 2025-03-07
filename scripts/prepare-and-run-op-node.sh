@@ -4,13 +4,14 @@
 
 CELO_PATH=${CELO_PATH:-./}
 
+JUST=`which just`
 # image: us-west1-docker.pkg.dev/devopsre/celo-blockchain-public/op-node:celo-v2.0.0-rc3
 if (test "$BIN_OPNODE" == "" -a ! -f ${CELO_PATH}optimism/op-node/bin/op-node) then {
   git clone https://github.com/celo-org/optimism.git
   cd  optimism
-  git checkout celo-v2.0.0-rc3
+  git checkout celo-v2.0.0-rc4
   cd op-node
-  gmake
+  $JUST
   cd ../..
 } fi;
 BIN_OPNODE=${BIN_OPNODE:-${CELO_PATH}optimism/op-node/bin/op-node}

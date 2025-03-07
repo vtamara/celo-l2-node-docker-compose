@@ -50,10 +50,6 @@ exec ${BIN_GETH} \
   --ws.port=8546 \
   --ws.origins="*" \
   --ws.api=debug,eth,txpool,net,engine,web3 \
-  --metrics \
-  --metrics.influxdb \
-  --metrics.influxdb.endpoint=http://influxdb:8086 \
-  --metrics.influxdb.database=opgeth \
   --syncmode="$OP_GETH__SYNCMODE" \
   --gcmode="$NODE_TYPE" \
   --authrpc.vhosts="*" \
@@ -68,4 +64,9 @@ exec ${BIN_GETH} \
   --verbosity=3 \
   --history.transactions=0 \
   $EXTENDED_ARG $@
+
+# --metrics \
+#  --metrics.influxdb \
+#  --metrics.influxdb.endpoint=http://influxdb:8086 \
+#  --metrics.influxdb.database=opgeth \
 
