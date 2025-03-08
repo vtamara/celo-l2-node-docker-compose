@@ -16,6 +16,7 @@ if [ -n "$EIGENDA_LOCAL_ARCHIVE_BLOBS" ]; then
   --storage.fallback-targets=s3"
 fi
 
+PWD=`pwd`
 exec ${BIN_EIGENDA} --addr=0.0.0.0 \
   --port=4242 \
   --eigenda.disperser-rpc="$EIGENDA_LOCAL_DISPERSER_RPC" \
@@ -26,4 +27,6 @@ exec ${BIN_EIGENDA} --addr=0.0.0.0 \
   --eigenda.disable-tls=false \
   --eigenda.confirmation-depth=1 \
   --eigenda.max-blob-length="32MiB" \
+  --eigenda.g1-path="$PWD/eigenda-proxy/resources/g1.point" \
+  --eigenda.g2-power-of-2-path="$PWD/eigenda-proxy/resources/g2.point.powerOf2" \
   $EXTENDED_EIGENDA_PARAMETERS
