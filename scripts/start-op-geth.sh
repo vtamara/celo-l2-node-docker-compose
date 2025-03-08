@@ -24,6 +24,7 @@ fi
 # Init genesis if it's a custom chain and the datadir is empty
 if [ -n "${IS_CUSTOM_CHAIN}" ] && [ -z "$(ls -A "$BEDROCK_DATADIR")" ]; then
   echo "Initializing custom chain genesis..."
+  echo ${BIN_GETH} init --datadir="$BEDROCK_DATADIR" ${CELO_PATH}chainconfig/genesis.json
   ${BIN_GETH} init --datadir="$BEDROCK_DATADIR" ${CELO_PATH}chainconfig/genesis.json
 fi
 

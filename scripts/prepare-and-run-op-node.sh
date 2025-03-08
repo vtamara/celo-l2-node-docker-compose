@@ -48,4 +48,8 @@ cat ${CELO_PATH}.env >> ${CELO_PATH}.op-node-exp.env
 
 
 #entrypoint: /scripts/start-op-node.sh
-env `grep "^[^#]" ${CELO_PATH}.op-node-exp.env | tr  "\n" " "` BIN_OPNODE=$BIN_OPNODE CELO_PATH=$CELO_PATH ${CELO_PATH}scripts/start-op-node.sh 
+env `grep "^[^#]" ${CELO_PATH}.op-node-exp.env | tr  "\n" " "` \
+   BIN_OPNODE=$BIN_OPNODE \
+   CELO_PATH=$CELO_PATH \
+   OPGETH_HTTP="http://localhost:8551" \
+   ${CELO_PATH}scripts/start-op-node.sh 

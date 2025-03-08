@@ -5,6 +5,8 @@ CELO_PATH=${CELO_PATH:-/}
 
 BIN_OPNODE=${BIN_OPNODE:-op-node}
 
+OPGETH_HTTP=${OPGETH_HTTP:-http://op-geth:8551}
+
 if [ -n "${IS_CUSTOM_CHAIN}" ]; then
   export EXTENDED_ARG="${EXTENDED_ARG:-} --rollup.config=${CELO_PATH}chainconfig/rollup.json"
 else
@@ -20,7 +22,7 @@ fi
 # Start op-node.
 exec ${BIN_OPNODE} \
   --l1=$OP_NODE__RPC_ENDPOINT \
-  --l2=http://op-geth:8551 \
+  --l2=${OPGETH_HTTP} \
   --rpc.addr=0.0.0.0 \
   --rpc.port=9545 \
   --l2.jwt-secret=${CELO_PATH}shared/jwt.txt \
