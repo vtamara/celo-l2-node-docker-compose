@@ -7,6 +7,8 @@ BIN_OPNODE=${BIN_OPNODE:-op-node}
 
 OPGETH_HTTP=${OPGETH_HTTP:-http://op-geth:8551}
 
+EIGENDA_HTTP=${EIGENDA_HTTP:-http://eigenda-proxy:4242}
+
 if [ -n "${IS_CUSTOM_CHAIN}" ]; then
   export EXTENDED_ARG="${EXTENDED_ARG:-} --rollup.config=${CELO_PATH}chainconfig/rollup.json"
 else
@@ -16,7 +18,7 @@ fi
 # OP_NODE_ALTDA_DA_SERVER is picked up by the op-node binary.
 export OP_NODE_ALTDA_DA_SERVER=$EIGENDA_PROXY_ENDPOINT
 if [ -n $USE_LOCAL_EIGENDA_PROXY_IF_UNSET ]; then
-  OP_NODE_ALTDA_DA_SERVER="http://eigenda-proxy:4242"
+  OP_NODE_ALTDA_DA_SERVER=${EIGENDA_HTTP}
 fi
 
 # Start op-node.

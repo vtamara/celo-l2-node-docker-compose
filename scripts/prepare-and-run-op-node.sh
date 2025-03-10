@@ -52,4 +52,5 @@ env `grep "^[^#]" ${CELO_PATH}.op-node-exp.env | tr  "\n" " "` \
    BIN_OPNODE=$BIN_OPNODE \
    CELO_PATH=$CELO_PATH \
    OPGETH_HTTP="http://localhost:8551" \
+   EIGENDA_HTTP="http://localhost:4242" \
    ${CELO_PATH}scripts/start-op-node.sh 
