@@ -27,7 +27,7 @@ if (test ! -d ${CELO_PATH}eigenda-data) then {
 
 # env_file:
 #      - .env
-cat ${CELO_PATH}.env > ${CELO_PATH}.eigenda-exp.env
+cat ${CELO_PATH}.env > ${CELO_PATH}.eigenda-proxy-exp.env
 
 # ports:
 #      - ${PORT_EIGENDA_PROXY:-4242}:4242
@@ -39,4 +39,7 @@ cat ${CELO_PATH}.env > ${CELO_PATH}.eigenda-exp.env
 #      replicas: ${USE_LOCAL_EIGENDA_PROXY_IF_UNSET:-1}
 
 # entrypoint: /scripts/start-eigenda-proxy.sh
-env `grep "^[^#]" ${CELO_PATH}.eigenda-exp.env | tr  "\n" " "` EIGENDA_LOCAL_ARCHIVE_BLOBS="" BIN_EIGENDA=$BIN_EIGENDA CELO_PATH=$CELO_PATH ${CELO_PATH}scripts/start-eigenda-proxy.sh 
+env `grep "^[^#]" ${CELO_PATH}.eigenda-proxy-exp.env | tr  "\n" " "` \
+  BIN_EIGENDA=$BIN_EIGENDA \
+  CELO_PATH=$CELO_PATH \
+  ${CELO_PATH}scripts/start-eigenda-proxy.sh 

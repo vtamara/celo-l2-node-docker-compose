@@ -4,6 +4,15 @@
 
 CELO_PATH=${CELO_PATH:-./}
 
+OS=`uname`
+if (test "$OS" = "OpenBSD") then {
+  echo "ulimit"
+  ulimit -d 127000000
+  ulimit -s 10000
+  ulimit -l 120000
+  ulimit -m 12000000
+} fi;
+
 echo "image:"
 # image: us-west1-docker.pkg.dev/devopsre/celo-blockchain-public/op-geth:celo-v2.0.0-rc3
 if (test "$BIN_GETH" == "" -a ! -f ${CELO_PATH}op-geth/build/bin/geth) then {
@@ -44,4 +53,8 @@ sed -e "s|/geth|${CELO_PATH}geth|g" envs/alfajores/op-geth.env > ${CELO_PATH}.op
 cat ${CELO_PATH}.env >> ${CELO_PATH}.op-geth-exp.env
 
 echo "entrypoint:"
-env `grep "^[^#]" ${CELO_PATH}.op-geth-exp.env | tr  "\n" " "` BIN_GETH=$BIN_GETH CELO_PATH=$CELO_PATH ${CELO_PATH}scripts/start-op-geth.sh 
+env `grep "^[^#]" ${CELO_PATH}.op-geth-exp.env | tr  "\n" " "` \
+   BIN_GETH=$BIN_GETH \
+   CELO_PATH=$CELO_PATH \
+   MONITOR_ENABLED=false \
+   ${CELO_PATH}scripts/start-op-geth.sh 
