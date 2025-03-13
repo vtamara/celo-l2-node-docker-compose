@@ -23,7 +23,7 @@ The popularity of these tools has brought slow transactions and increased transa
 * `op-node`, the rollup node that sends blocks to `op-geth` and derives L2 (Celo) blocks from the L1 (Etherum).
 * The sequencer that produces and executes L2 blocks and submits users transactions to L1 as blobs that are in a compressed format and directed to a non-contract address to minimize gas.
 
-According to [The EigenDA Overview](https://docs.eigenda.xyz/overview) The EigenDA Proxy sits between the sequencer and Etherum distributing the storage of the blobs cryptographically among its own network of validators to reduce costs and to give faster availability of the L2's data to the L2, as the followin diagram from the same site shows.
+According to [The EigenDA Overview](https://docs.eigenda.xyz/overview) The EigenDA Proxy sits between the sequencer and Etherum distributing the storage of the blobs cryptographically among its own network of validators to reduce costs and to give faster availability of the L2's data to the L2, as the following diagram from the same site shows.
 
 ![image](https://github.com/user-attachments/assets/a63fc92d-d65c-4ab9-888e-bb9b39bbf752)
 
