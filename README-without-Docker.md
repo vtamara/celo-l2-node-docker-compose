@@ -1,10 +1,12 @@
-# 1. Introduction
+# Tutorial to test a node of CELO as L2 without Docker
+
+## 1. Introduction
 
 If you want to understand more about the L2 migration of CELO and how a node works on the testnets during the period of migration from L1 to L2, this tutorial might be for you.
 
 This tutorial will help you test a CELO node with Alfajores or Baklava as L2, Holesky as L1 and without Docker. Keep in mind that the node you run will not be production ready because it has no metrics, no health check, and no historical data.
 
-# 2. Concepts
+## 2. Concepts
 
 A blockchain (like Bitcoin) is a public ledger where transaction history (states) are maintained in blocks, linking one block to the next with cryptographic functions to ensure their validity and security. The state includes the balance of each wallet/address and is public and available with a blockchain explorer.
 
@@ -36,7 +38,7 @@ The modifications of `op-node` consist of changes to 220 source files that inclu
 * Usage of alternative fee currencies
 
 
-# 3. Our modification to the `celo-l2-node-docker-composer` repository
+## 3. Our modification to the `celo-l2-node-docker-composer` repository
 
 Of the 8 Docker components in the original `celo-l2-node-docker-compose` repository, we "undockerized" 3 in our branch:
 
@@ -58,7 +60,7 @@ In order to compile `op-node` in our platform we also ported the `just` tool to 
 We also proposed 2 small pull requests (see [24](https://github.com/celo-org/celo-l2-node-docker-compose/pull/24) and [33](https://github.com/celo-org/celo-l2-node-docker-compose/pull/33)) for `celo-l2-node-docker` to make it more portable and that have been merged.
 
 
-# 4. Requirements and initial setup
+## 4. Requirements and initial setup
 
 As the original repo explains the hardware requirements are:
 * 16 GB+ RAM
@@ -98,7 +100,7 @@ cp baklava.env .env
 ```
 according with the testnet you want to use (alfajores for contracts and baklava for validators).
 
-# 5. Prepare and run `op-geth`
+## 5. Prepare and run `op-geth`
 
 Run the script
 ```
@@ -149,7 +151,7 @@ INFO [02-13|04:01:42.257] Chain ID: 44787 (unknown)
 
 Because 44787 is the Alfajores network ID.
 
-# 6. Prepare and run `op-node`
+## 6. Prepare and run `op-node`
 
 Run the script
 ```
@@ -178,7 +180,7 @@ $CELO_PATH
 
 And the abundant output will show that it is synchronizing.
 
-# 7. Prepare and run `eigenda-proxy`
+## 7. Prepare and run `eigenda-proxy`
 
 Run the script
 ```
@@ -197,7 +199,7 @@ $CELO_PATH
 | | | `-- eigenda-proxxy
 ```
 
-# 8. Synchronization with testnet
+## 8. Synchronization with testnet
 
 We noticed that `op-node` doesn't require much memory but `op-geth` does, in fact, for us it stopped with a `fatal error: out of memory` error that we solved by running before `op-geth`:
 
@@ -269,9 +271,9 @@ Mar 10 11:48:49.213 INF server/handlers.go:103 Processing GET request commitment
 Mar 10 11:48:49.798 INF server/middleware.go:96 request method=GET url=/get/0x010000f90197f853f842a00ee10d67d4a81fa96b37b608e4b6cca5d211aa3f7559d45937c5efe9d8f50e6fa02f04f3cf4bef3972e8f07ed26c26d730233abead512689e15b3c56d31a7dda4f821000cbc480213710c50121378180f9013f83026f7e1cf873eba0cf26c35dadc9699e08d25fb5b0fd2825857696e2b286b08a1178129d2369614282000182465a8334e908a019d28e0e5aade7f99b41a9e038daa87876b9a10cd53e4e35aa05476db3f37ebf008334e95da097980f0f59dde49db7b509ab81a7a8ad71d13eba5c95a7ae726aeec2bda6eb6eb8c09ce6c8d5715553355d4cc1a110754052b4f44f5c838c92a900cc21e299179131818a1c42946028d1f510882b054449b5680ce32f07ed4c5f174064053c022c050df49bafeae89fc73194c91eec70b99f7e5833c17d66d5cf7e648ce083e5dcc693d7dba57bcb28d770d7471f88c1375fb91567dacc06e860ebd060b23dd5bde81a284231adc5be4251053519affffaf6ed0f1cdb3cb13ec46d3eacd78aff968766f36e58a3d561f19e5c127d67027e4ade5b3a2d68a4b9cc36ff4e9d971c6829820001 status=200 duration=585.135633ms
 ```
 
-# 9. Running the regression tests from OpenBSD/adJ
+## 9. Running the regression tests from OpenBSD/adJ
 
-## 9.1 op-geth
+### 9.1 op-geth
 
 We run them from the `op-geth` source directory with `gmake test`. All 117 file tests passed, except for the following 9:
 ```
@@ -307,18 +309,18 @@ We also compared by running the `eth-optimism/op-geth` and `ethereum/go-etehereu
 
 We already reported it in [go-etherum#30961](https://github.com/ethereum/go-ethereum/issues/30961) and are helping to resolve it.
 
-## 9.2 op-node
+### 9.2 op-node
 
 We ran it from the `optimism/op-node` source directory with `/usr/local/bin/just test`. 1299 tests passed.
 
-## 9.3 eigenda-proxy
+### 9.3 eigenda-proxy
 
 We ran it from the `eigenda-proxy` source directory with `gmake test`. All the tests in six files passed, except for one that failed because it requires Docker:
 ```
 panic: failed to start MinIO container: create container: unable to connect to Docker daemon at unix:///var/run/docker.sock. Is the Docker daemon running?
 ```
 
-# 10. Conclusions
+## 10. Conclusions
 
 * We hope that, like us, you've learned a little more about CELO's new L2 infrastructure, based on Ethereum,  op-stack, eigenda-proxy, and CELO's unique modifications.
 * Thanks to God, with minimal modifications and the help of some Celo blockchain developers on [Discord](https://discord.gg/celo) (particularly karlb and palango), we were able to test nodes and sync with the Alfajores and Baklava L2s:
