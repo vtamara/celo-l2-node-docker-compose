@@ -336,4 +336,4 @@ panic: failed to start MinIO container: create container: unable to connect to D
   * We proposed 2 small pull requests for `celo-l2-node-docker` that have been merged:
     * https://github.com/celo-org/celo-l2-node-docker-compose/pull/24
     * https://github.com/celo-org/celo-l2-node-docker-compose/pull/33
-* We found some issues with `op-geth` regression testing on OpenBSD/adJ that go back to the `go-ethereum` repository and plan to help resolve them.
+* We found some issues with `op-geth` regression testing on OpenBSD/adJ that go back to the `go-ethereum` repository and we already fixed them in that repository, see https://github.com/ethereum/go-ethereum/pull/31357
